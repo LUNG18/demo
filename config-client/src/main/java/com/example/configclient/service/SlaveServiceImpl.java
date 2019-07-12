@@ -1,5 +1,6 @@
 package com.example.configclient.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.configclient.dao.UserDao;
 import com.example.configclient.pojo.UserPojo;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +19,9 @@ public class SlaveServiceImpl implements SlaveService{
 
 
     @Override
-    public List<UserPojo> list(String name){
-        return userDao.selectList(name);
+    public Page<UserPojo> list(Page<UserPojo> page,String name){
+//        List<UserPojo> userPojos = userDao.selectList(page, name);
+        return page.setRecords(userDao.selectList(page,name));
     }
 
 }

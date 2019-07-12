@@ -1,9 +1,12 @@
 package com.example.configclient.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.example.configclient.Enums.DataSourceEnum;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -80,12 +83,14 @@ public class DataSourceConfig {
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dynamicDataSource")DataSource dynamicDataSource) throws Exception {
-        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        final MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
         sessionFactory.setDataSource(dynamicDataSource);
+        /*别名包*/
         sessionFactory.setTypeAliasesPackage(POJO_PACKAGE);
-        org.apache.ibatis.session.Configuration config = new org.apache.ibatis.session.Configuration();
-        config.setMapUnderscoreToCamelCase(true);
-        sessionFactory.setConfiguration(config);
+        /*分页插件*/
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        sessionFactory.setPlugins(new Interceptor[]{paginationInterceptor});
+
         sessionFactory.setMapperLocations(
             new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION)
         );

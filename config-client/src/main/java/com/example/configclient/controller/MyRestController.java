@@ -1,21 +1,21 @@
 package com.example.configclient.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.configclient.basic.BaseController;
 import com.example.configclient.pojo.UserPojo;
 import com.example.configclient.service.MasterService;
 import com.example.configclient.service.SlaveService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RefreshScope
 @Slf4j
-public class MyRestController {
+public class MyRestController extends BaseController {
 
 
     @Resource
@@ -30,8 +30,9 @@ public class MyRestController {
     }
 
     @RequestMapping("get")
-    public List<UserPojo> test2(String name){
-        return slaveService.list(name);
+    public Page<UserPojo> test2(String name){
+        Page page = defaultPage();
+        return slaveService.list(page,name);
     }
 
 
