@@ -1,7 +1,7 @@
 package com.example.configclient.service;
 
-import com.example.configclient.dao.TestDao;
-import com.example.configclient.pojo.TestPojo;
+import com.example.configclient.dao.UserDao;
+import com.example.configclient.pojo.UserPojo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import javax.annotation.Resource;
 public class MasterServiceImpl implements MasterService{
 
     @Resource
-    private TestDao testDao;
+    private UserDao userDao;
 
 
     @Override
-    public TestPojo findByName(String name){
-        return testDao.findByName(name);
+    public void addUser(UserPojo pojo){
+         userDao.insert(pojo);
     }
 
 }

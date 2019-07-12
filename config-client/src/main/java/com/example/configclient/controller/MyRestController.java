@@ -1,5 +1,6 @@
 package com.example.configclient.controller;
 
+import com.example.configclient.pojo.UserPojo;
 import com.example.configclient.service.MasterService;
 import com.example.configclient.service.SlaveService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RefreshScope
@@ -21,18 +23,19 @@ public class MyRestController {
     @Resource
     private SlaveService slaveService;
 
-    @RequestMapping("test")
-    public String test(String name){
-        return masterService.findByName(name).toString();
+    @RequestMapping("add")
+    public String test(UserPojo pojo){
+        masterService.addUser(pojo);
+        return "over";
     }
 
-    @RequestMapping("test2")
-    public String test2(String name){
-        return slaveService.findByName(name).toString();
+    @RequestMapping("get")
+    public List<UserPojo> test2(String name){
+        return slaveService.list(name);
     }
 
 
-    @Value("${murl}")
+    /*@Value("${murl}")
     private String url;
     @Value("${musername}")
     private String username;
@@ -44,6 +47,6 @@ public class MyRestController {
     @RequestMapping("/database")
     public String database() {
         return url+" "+username+" "+password+" "+driver;
-    }
+    }*/
 
 }

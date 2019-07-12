@@ -83,6 +83,9 @@ public class DataSourceConfig {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dynamicDataSource);
         sessionFactory.setTypeAliasesPackage(POJO_PACKAGE);
+        org.apache.ibatis.session.Configuration config = new org.apache.ibatis.session.Configuration();
+        config.setMapUnderscoreToCamelCase(true);
+        sessionFactory.setConfiguration(config);
         sessionFactory.setMapperLocations(
             new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATION)
         );
