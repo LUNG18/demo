@@ -1,2 +1,10 @@
 server:
   port: 7999
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///test?useUnicode=true&serverTimezone=UTC
+    username: root
+    password:
