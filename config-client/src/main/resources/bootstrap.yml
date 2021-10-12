@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: visea
-  cloud:
-    config:
-      uri: http://localhost:8888
-      profile: dev
