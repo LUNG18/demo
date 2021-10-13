@@ -8,3 +8,11 @@ spring:
     url: jdbc:mysql:///test?useUnicode=true&serverTimezone=UTC
     username: root
     password:
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  type-aliases-package: com.puzhong.**.model
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,4 +1,4 @@
-package com.puzhong.admin.security;
+package com.puzhong.admin.security.config;
 
 import com.puzhong.admin.security.service.LoginUserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
