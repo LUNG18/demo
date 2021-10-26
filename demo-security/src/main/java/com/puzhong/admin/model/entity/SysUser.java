@@ -1,11 +1,13 @@
-package com.puzhong.admin.model;
+package com.puzhong.admin.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class User implements Serializable {
+@TableName("tb_user")
+public class SysUser implements Serializable {
     private Long id;
     private String username;
     private String password;

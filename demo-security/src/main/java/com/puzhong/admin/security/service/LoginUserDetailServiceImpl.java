@@ -11,10 +11,10 @@ import javax.annotation.Resource;
 public class LoginUserDetailServiceImpl implements UserDetailsService {
 
     @Resource
-    private AuthorityService authorityService;
+    private AuthService authService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return authorityService.getAuthUserByUsername(username);
+        return authService.getAuthUserByUsername(username);
     }
 }

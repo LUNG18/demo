@@ -1,12 +1,12 @@
 package com.puzhong.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.puzhong.admin.model.Permission;
+import com.puzhong.admin.model.entity.SysPermission;
 
 import java.util.List;
 
-public interface PermissionMapper extends BaseMapper<Permission> {
+public interface PermissionMapper extends BaseMapper<SysPermission> {
 
-    List<Permission> selectByUserId(Long userId);
+    List<String> selectPermissionByUserId(Long userId);
 
 }

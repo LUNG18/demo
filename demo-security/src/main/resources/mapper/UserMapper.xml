@@ -3,7 +3,7 @@
 
 <mapper namespace="com.puzhong.admin.mapper.UserMapper">
 
-    <select id="selectByUsername" resultType="user">
+    <select id="selectByUsername" resultType="sysUser">
         select * from tb_user where username = #{username}
     </select>
 

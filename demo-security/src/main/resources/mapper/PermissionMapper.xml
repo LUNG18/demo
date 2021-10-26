@@ -3,14 +3,15 @@
 
 <mapper namespace="com.puzhong.admin.mapper.PermissionMapper">
 
-    <select id="selectByUserId" resultType="permission">
+    <select id="selectPermissionByUserId" resultType="java.lang.String">
         select
-        p.*
+        p.url
         from tb_permission p
         join tb_role_permission rp on p.id = rp.permission_id
         join tb_role r on r.id = rp.role_id
         join tb_user_role ur on r.id = ur.role_id
         join tb_user u on u.id = ur.user_id
-        where u.id = #{userId}
+        where type = 1
+				and u.id = #{userId}
     </select>
 </mapper>

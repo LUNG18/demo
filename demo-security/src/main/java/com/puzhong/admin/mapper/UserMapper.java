@@ -1,11 +1,11 @@
 package com.puzhong.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.puzhong.admin.model.User;
+import com.puzhong.admin.model.entity.SysUser;
 
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<SysUser> {
 
-    User selectByUsername(String username);
+    SysUser selectByUsername(String username);
 
 }
 
