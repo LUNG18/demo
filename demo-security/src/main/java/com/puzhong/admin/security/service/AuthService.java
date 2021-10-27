@@ -10,6 +10,7 @@ import com.puzhong.admin.model.entity.SysPermission;
 import com.puzhong.admin.model.entity.SysUser;
 import com.puzhong.admin.model.vo.MenuVo;
 import com.puzhong.admin.utils.BeanUtils;
+import com.puzhong.admin.utils.RedisUtils;
 import com.puzhong.admin.utils.TreeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -36,6 +37,8 @@ public class AuthService {
     private MenuMapper menuMapper;
     @Resource
     private PermissionMapper permissionMapper;
+    @Resource
+    private RedisUtils redisUtils;
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
@@ -82,7 +85,8 @@ public class AuthService {
         wrapper.select(SysPermission::getUrl);
         wrapper.eq(SysPermission::getStatus, 1);
         wrapper.eq(SysPermission::getType, 0);
-        permitUriList = permissionMapper.selectList(wrapper).stream().map(SysPermission::getUrl).collect(Collectors.toList());
+        List<String> list = permitUriList = permissionMapper.selectList(wrapper).stream().map(SysPermission::getUrl).collect(Collectors.toList());
+        redisUtils.resetList("123", list);
         log.info("放行路径 {}", permitUriList);
     }
 

@@ -9,6 +9,10 @@ spring:
     username: root
     password:
 
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   type-aliases-package: com.puzhong.**.model

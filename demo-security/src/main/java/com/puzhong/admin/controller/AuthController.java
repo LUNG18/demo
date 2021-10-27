@@ -16,12 +16,12 @@ public class AuthController {
     AuthService authService;
 
     @RequestMapping("/admin/menu/all/list")
-    public List<MenuVo> adminMenuAllList(){
+    public List<MenuVo> adminMenuAllList() {
         return authService.getAdminMenuAllList();
     }
 
     @RequestMapping("/admin/menu/list")
-    public List<MenuVo> adminMenuList(Long userId){
+    public List<MenuVo> adminMenuList(Long userId) {
         return authService.getAdminMenuList(userId);
     }
 }
