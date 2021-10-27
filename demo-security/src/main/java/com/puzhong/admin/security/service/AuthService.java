@@ -11,6 +11,7 @@ import com.puzhong.admin.model.entity.SysUser;
 import com.puzhong.admin.model.vo.MenuVo;
 import com.puzhong.admin.utils.BeanUtils;
 import com.puzhong.admin.utils.TreeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,12 +20,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class AuthService {
     @Resource
     private UserMapper userMapper;
@@ -35,16 +39,29 @@ public class AuthService {
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
+    private List<String> permitUriList = new ArrayList<>();
+
+    @PostConstruct
+    private void init() {
+        this.initPermitUriList();
+    }
+
+    public void refresh() {
+        init();
+    }
+
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof AuthUser) {
-            Long userId = ((AuthUser) principal).getId();
-            List<String> permissions = permissionMapper.selectPermissionByUserId(userId);
-            return permissions.stream().anyMatch(
-                    url -> pathMatcher.match(url, request.getRequestURI())
-            );
+        String uri = request.getRequestURI();
+        boolean ret = permitUriList.stream().anyMatch(url -> pathMatcher.match(url, uri));
+        if (!ret) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof AuthUser) {
+                Long userId = ((AuthUser) principal).getId();
+                List<String> permissions = permissionMapper.selectPermissionByUserId(userId);
+                return permissions.stream().anyMatch(url -> pathMatcher.match(url, uri));
+            }
         }
-        return false;
+        return ret;
     }
 
     public UserDetails getAuthUserByUsername(String username) {
@@ -60,13 +77,13 @@ public class AuthService {
         return null;
     }
 
-    public String[] getAllPermitUrl() {
+    public void initPermitUriList() {
         LambdaQueryWrapper<SysPermission> wrapper = new LambdaQueryWrapper<>();
         wrapper.select(SysPermission::getUrl);
         wrapper.eq(SysPermission::getStatus, 1);
         wrapper.eq(SysPermission::getType, 0);
-        List<SysPermission> sysPermissionList = permissionMapper.selectList(wrapper);
-        return sysPermissionList.stream().map(SysPermission::getUrl).toArray(String[]::new);
+        permitUriList = permissionMapper.selectList(wrapper).stream().map(SysPermission::getUrl).collect(Collectors.toList());
+        log.info("放行路径 {}", permitUriList);
     }
 
     public List<MenuVo> getAdminMenuAllList() {

@@ -2,7 +2,6 @@ package com.puzhong.admin.security.config;
 
 import com.puzhong.admin.security.denied.CustomAccessDeniedHandler;
 import com.puzhong.admin.security.denied.CustomAuthenticationEntryPoint;
-import com.puzhong.admin.security.service.AuthService;
 import com.puzhong.admin.security.service.LoginUserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +21,6 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomAuthenticationEntryPoint authenticationEntryPoint;
     @Resource
     private LoginUserDetailServiceImpl userDetailService;
-    @Resource
-    private AuthService authService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -34,7 +31,8 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers(authService.getAllPermitUrl()).permitAll()
+                .authorizeRequests()
+//                .antMatchers(authService.getAllPermitUrl()).permitAll()
                 .anyRequest().access("@authService.hasPermission(request,authentication)");
 
         http.exceptionHandling()
