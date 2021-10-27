@@ -11,7 +11,7 @@
         join tb_role r on r.id = rp.role_id
         join tb_user_role ur on r.id = ur.role_id
         join tb_user u on u.id = ur.user_id
-        where type = 1 and status = 1
+        where p.`type` = 1 and p.`status` = 1
     </sql>
 
     <select id="selectByUserId" resultType="sysMenu">
