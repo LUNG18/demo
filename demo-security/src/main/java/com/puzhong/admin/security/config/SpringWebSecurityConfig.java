@@ -35,14 +35,14 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests().antMatchers(authService.getAllPermitUrl()).permitAll()
-                .anyRequest().access("@authService.hasPermission(request,authentication)")
-                .and()
-                .exceptionHandling()
+                .anyRequest().access("@authService.hasPermission(request,authentication)");
+
+        http.exceptionHandling()
 //                .authenticationEntryPoint(authenticationEntryPoint)
-                .accessDeniedHandler(accessDeniedHandler)
-                .and()
-                .formLogin()
-        ;
+                .accessDeniedHandler(accessDeniedHandler);
+
+        http.formLogin();
+        http.csrf().disable();
     }
 
     @Override
