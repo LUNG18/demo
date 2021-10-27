@@ -86,7 +86,4 @@ public class AuthService {
         return TreeUtils.build(voList);
     }
 
-    public List<String> getAllPermissionByUesrName(String username) {
-        return null;
-    }
 }
