@@ -1,7 +1,7 @@
 package com.puzhong.admin.controller;
 
 import com.puzhong.admin.model.vo.MenuVo;
-import com.puzhong.admin.security.service.AuthService;
+import com.puzhong.admin.service.impl.MenuServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,15 +13,15 @@ import java.util.List;
 public class AuthController {
 
     @Resource
-    AuthService authService;
+    MenuServiceImpl menuService;
 
     @RequestMapping("/admin/menu/all/list")
     public List<MenuVo> adminMenuAllList() {
-        return authService.getAdminMenuAllList();
+        return menuService.getAdminMenuAllList();
     }
 
     @RequestMapping("/admin/menu/list")
     public List<MenuVo> adminMenuList(Long userId) {
-        return authService.getAdminMenuList(userId);
+        return menuService.getAdminMenuList(userId);
     }
 }

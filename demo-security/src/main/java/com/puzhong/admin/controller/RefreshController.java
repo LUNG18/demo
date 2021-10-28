@@ -13,8 +13,8 @@ public class RefreshController {
     @Resource
     private AuthService authService;
 
-    @RequestMapping("/permit/uri")
-    public void permitUri(){
+    @RequestMapping("/auth")
+    public void auth(){
         authService.refresh();
     }
 

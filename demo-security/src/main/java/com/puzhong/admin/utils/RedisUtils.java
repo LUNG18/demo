@@ -121,6 +121,16 @@ public class RedisUtils {
     /**
      * 缓存Map
      */
+    public <T> void resetMap(String key, Map<String, T> dataMap) {
+        if (hasKey(key)) {
+            delete(key);
+        }
+        setMap(key, dataMap);
+    }
+
+    /**
+     * 缓存Map
+     */
     public <T> void setMap(String key, Map<String, T> dataMap) {
         HashOperations hashOperations = stringRedisTemplate.opsForHash();
         if (null != dataMap) {

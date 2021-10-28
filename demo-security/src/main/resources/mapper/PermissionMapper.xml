@@ -3,9 +3,9 @@
 
 <mapper namespace="com.puzhong.admin.mapper.PermissionMapper">
 
-    <select id="selectPermissionByUserId" resultType="java.lang.String">
+    <select id="selectPermissionByUserId" resultType="sysPermission">
         select
-        p.url
+        p.*
         from tb_permission p
         join tb_role_permission rp on p.id = rp.permission_id
         join tb_role r on r.id = rp.role_id
