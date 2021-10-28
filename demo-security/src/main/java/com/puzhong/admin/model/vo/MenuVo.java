@@ -9,19 +9,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 public class MenuVo extends TreeUtils.TreeNode<MenuVo> {
-    private Long id;
-    private Long parentId;
     private String name;
     private String enname;
     private String url;
-
-    @Override
-    protected Long getMenuId() {
-        return this.id;
-    }
-
-    @Override
-    protected Long getMenuPid() {
-        return this.parentId;
-    }
 }
