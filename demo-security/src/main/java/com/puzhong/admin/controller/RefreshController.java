@@ -14,7 +14,7 @@ public class RefreshController {
     private AuthService authService;
 
     @RequestMapping("/auth")
-    public void auth(){
+    public void auth() {
         authService.refresh();
     }
 

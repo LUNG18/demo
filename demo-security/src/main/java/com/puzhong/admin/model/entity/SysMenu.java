@@ -1,13 +1,14 @@
 package com.puzhong.admin.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.puzhong.admin.base.entity.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("tb_menu")
-public class SysMenu implements Serializable {
-    private Long id;
+public class SysMenu extends BaseEntity {
     private Long parentId;
     private String name;
     private String enname;

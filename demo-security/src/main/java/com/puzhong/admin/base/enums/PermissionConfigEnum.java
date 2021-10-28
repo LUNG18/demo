@@ -1,4 +1,4 @@
-package com.puzhong.admin.constant.enums;
+package com.puzhong.admin.base.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,8 +7,7 @@ public class PermissionConfigEnum {
 
     public enum Type {
 
-        OPEN_PERMISSION("权限控制")
-        ;
+        OPEN_PERMISSION("权限控制");
 
         private String display;
         private static Map<String, Type> all = new HashMap<>();

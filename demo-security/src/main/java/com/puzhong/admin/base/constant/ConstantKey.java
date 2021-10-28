@@ -1,4 +1,4 @@
-package com.puzhong.admin.constant;
+package com.puzhong.admin.base.constant;
 
 public class ConstantKey {
 

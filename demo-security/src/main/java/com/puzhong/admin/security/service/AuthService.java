@@ -1,10 +1,10 @@
 package com.puzhong.admin.security.service;
 
-import com.puzhong.admin.constant.enums.PermissionConfigEnum;
+import com.puzhong.admin.base.enums.PermissionConfigEnum;
 import com.puzhong.admin.model.entity.AuthUser;
 import com.puzhong.admin.model.entity.SysPermission;
-import com.puzhong.admin.service.impl.PermissionServiceImpl;
-import com.puzhong.admin.service.impl.UserServiceImpl;
+import com.puzhong.admin.service.PermissionService;
+import com.puzhong.admin.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,9 +19,9 @@ import java.util.List;
 public class AuthService extends AuthInitService {
 
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
     @Resource
-    private PermissionServiceImpl permissionService;
+    private PermissionService permissionService;
 
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         if (!PermissionConfigEnum.Type.openPermission(permissionMap)) {

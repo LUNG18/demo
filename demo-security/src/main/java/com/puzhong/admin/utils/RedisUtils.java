@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@Component
 public class RedisUtils {
 
     @Resource
@@ -132,10 +131,10 @@ public class RedisUtils {
      * 缓存Map
      */
     public <T> void setMap(String key, Map<String, T> dataMap) {
-        HashOperations hashOperations = stringRedisTemplate.opsForHash();
         if (null != dataMap) {
-            for (Map.Entry<String, T> entry : dataMap.entrySet()) {
-                hashOperations.put(key, entry.getKey(), entry.getValue());
+            HashOperations hashOperations = stringRedisTemplate.opsForHash();
+            for (String mapKey : dataMap.keySet()) {
+                hashOperations.put(key, mapKey, toJson(dataMap.get(mapKey)));
             }
         }
     }
@@ -172,8 +171,7 @@ public class RedisUtils {
      * 获得缓存的Map
      */
     public <T> T getMapValue(String key, String mapKey) {
-        T value = (T) stringRedisTemplate.opsForHash().entries(key).get(mapKey);
-        return value;
+        return (T) stringRedisTemplate.opsForHash().entries(key).get(mapKey);
     }
 
     /**

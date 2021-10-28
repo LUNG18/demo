@@ -12,6 +12,6 @@
         join tb_user_role ur on r.id = ur.role_id
         join tb_user u on u.id = ur.user_id
         where type = 1
-				and u.id = #{userId}
+        and u.id = #{userId}
     </select>
 </mapper>

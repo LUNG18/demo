@@ -15,11 +15,11 @@
     </sql>
 
     <select id="selectByUserId" resultType="sysMenu">
-        <include refid="selectBase" />
+        <include refid="selectBase"/>
         and u.id = #{userId}
     </select>
 
     <select id="selectAll" resultType="sysMenu">
-        <include refid="selectBase" />
+        <include refid="selectBase"/>
     </select>
 </mapper>

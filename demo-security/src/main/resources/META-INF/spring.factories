@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.puzhong.admin.utils.RedisUtils\
+  ,com.puzhong.admin.config.FieldMetaObjectHandler\
+  ,com.puzhong.admin.config.MyBatisPlusConfig
+

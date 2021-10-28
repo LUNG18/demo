@@ -1,10 +1,10 @@
 package com.puzhong.admin.security.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.puzhong.admin.mapper.PermissionConfigMapper;
-import com.puzhong.admin.mapper.PermissionMapper;
 import com.puzhong.admin.model.entity.SysPermission;
 import com.puzhong.admin.model.entity.SysPermissionConfig;
+import com.puzhong.admin.service.PermissionConfigService;
+import com.puzhong.admin.service.PermissionService;
 import com.puzhong.admin.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.puzhong.admin.constant.ConstantKey.AUTH_ADMIN_PERMISSION_URL;
+import static com.puzhong.admin.base.constant.ConstantKey.AUTH_ADMIN_PERMISSION_CONFIG;
+import static com.puzhong.admin.base.constant.ConstantKey.AUTH_ADMIN_PERMISSION_URL;
 
 @Slf4j
 public class AuthInitService {
@@ -25,9 +26,9 @@ public class AuthInitService {
     @Resource
     protected RedisUtils redisUtils;
     @Resource
-    private PermissionMapper permissionMapper;
+    private PermissionService permissionService;
     @Resource
-    private PermissionConfigMapper permissionConfigMapper;
+    private PermissionConfigService permissionConfigService;
 
     protected final AntPathMatcher pathMatcher = new AntPathMatcher();
 
@@ -48,9 +49,11 @@ public class AuthInitService {
     private void initPermitUriList() {
         LambdaQueryWrapper<SysPermission> wrapper = new LambdaQueryWrapper<>();
         wrapper.select(SysPermission::getUrl);
-        wrapper.eq(SysPermission::getStatus, 1);
-        wrapper.eq(SysPermission::getType, 0);
-        permitUriList = permissionMapper.selectList(wrapper).stream().map(SysPermission::getUrl).collect(Collectors.toList());
+        wrapper
+                .eq(SysPermission::getStatus, 1)
+                .eq(SysPermission::getType, 0);
+
+        permitUriList = permissionService.list(wrapper).stream().map(SysPermission::getUrl).collect(Collectors.toList());
         redisUtils.resetList(AUTH_ADMIN_PERMISSION_URL, permitUriList);
         log.info("放行路径 {}", permitUriList);
     }
@@ -58,9 +61,9 @@ public class AuthInitService {
     private void initPermissionConfig() {
         LambdaQueryWrapper<SysPermissionConfig> wrapper = new LambdaQueryWrapper<>();
         wrapper.select(SysPermissionConfig::getType, SysPermissionConfig::getStatus);
-        List<SysPermissionConfig> list = permissionConfigMapper.selectList(wrapper);
+        List<SysPermissionConfig> list = permissionConfigService.list(wrapper);
         permissionMap = list.stream().collect(Collectors.toMap(SysPermissionConfig::getType, SysPermissionConfig::getStatus));
-        redisUtils.resetMap(AUTH_ADMIN_PERMISSION_URL, permissionMap);
+        redisUtils.resetMap(AUTH_ADMIN_PERMISSION_CONFIG, permissionMap);
         log.info("权限配置 {}", permissionMap);
     }
 }

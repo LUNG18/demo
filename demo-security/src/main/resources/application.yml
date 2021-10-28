@@ -20,3 +20,8 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     auto-mapping-behavior: full
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: flag
+      logic-delete-value: -1
+      logic-not-delete-value: 0

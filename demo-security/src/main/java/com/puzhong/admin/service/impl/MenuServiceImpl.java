@@ -34,7 +34,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, SysMenu> implements
         List<MenuVo> voList = menuList.stream()
                 .map(item -> BeanUtils.sourceToTarget(item, MenuVo.class))
                 .collect(Collectors.toList());
-        return TreeUtils.build(voList);
+        return (List<MenuVo>) TreeUtils.build(voList);
     }
 
 }

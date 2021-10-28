@@ -1,7 +1,7 @@
 package com.puzhong.admin.controller;
 
 import com.puzhong.admin.model.vo.MenuVo;
-import com.puzhong.admin.service.impl.MenuServiceImpl;
+import com.puzhong.admin.service.MenuService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class AuthController {
 
     @Resource
-    MenuServiceImpl menuService;
+    MenuService menuService;
 
     @RequestMapping("/admin/menu/all/list")
     public List<MenuVo> adminMenuAllList() {
